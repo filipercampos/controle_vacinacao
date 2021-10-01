@@ -28,25 +28,25 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.only(bottom: 40.0),
-                child: Image(
-                  image: AssetImage('assets/images/seringa.png'),
-                  width: mediaQuery.size.width * 0.5,
-                  height: mediaQuery.size.width * 0.5,
+              CircleAvatar(
+                radius: 100,
+                child: ClipOval(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Image(
+                      image: AssetImage('assets/images/seringa.jpeg'),
+                      width: mediaQuery.size.width * 0.5,
+                      height: mediaQuery.size.width * 0.5,
+                    ),
+                  ),
                 ),
               ),
+              SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  elevation: 16,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: LoginFormWidget(),
-                  ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: LoginFormWidget(),
                 ),
               ),
             ],

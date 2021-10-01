@@ -76,11 +76,10 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed))
-                            return Colors.blue;
+                            return Colors.grey;
                           else if (states.contains(MaterialState.disabled))
                             return Theme.of(context).accentColor.withAlpha(100);
-                          return Theme.of(context)
-                              .primaryColor; // Use the component's default.
+                          return Colors.purple; // Use the component's default.
                         },
                       ),
                     ),
