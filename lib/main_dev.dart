@@ -9,5 +9,5 @@ void main() async {
   // use firebase products
   await Firebase.initializeApp();
   // run app
-  runApp( AppWidget());
+  runApp(AppWidget());
 }

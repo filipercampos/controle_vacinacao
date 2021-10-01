@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/modules/login/models/user_model.dart';
 import 'package:controle_vacinacao/app/shared/repositories/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,16 @@ import 'package:mobx/mobx.dart';
 import 'firebaseapp_auth.dart';
 
 class AuthRepository {
-  final userRepository = UserRepository();
+  AuthRepository() {
+    _loadCurrentUser();
+  }
+  final _userRepository = UserRepository();
+
+  UserModel? _user;
+
+  UserModel get user => _user!;
+
+   bool get isAuth => _user != null;
 
   ///Auth firebase [FirebaseAppAuth] with email and password
   @action
@@ -17,8 +27,33 @@ class AuthRepository {
 
       return firebaseUser;
     } catch (err) {
-      debugPrint('AuthController.authFirebase $err');
+      debugPrint('auth $err');
       throw err;
+    }
+  }
+
+  ///Get current [User]
+  User? getCurrentUser() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    return auth.currentUser;
+  }
+
+  ///Carrega o [User] Seta o usuário autenticado com suas permissões
+  ///Verifica se existe um usuário autenticado
+  Future _loadCurrentUser({User? firebaseUser}) async {
+    //verifica se o usuário informado
+    final currentUser = firebaseUser ?? getCurrentUser();
+
+    if (currentUser != null) {
+      try {
+        _user = await _userRepository.getById(currentUser.uid);
+
+      } catch (error) {
+        //logout
+        signOut();
+      }
+    } else {
+      _user = null;
     }
   }
 
@@ -29,6 +64,8 @@ class AuthRepository {
     try {
       //logout
       await FirebaseAuth.instance.signOut();
-    } catch (error) {}
+    } catch (error) {
+      debugPrint('signOut $error');
+    }
   }
 }

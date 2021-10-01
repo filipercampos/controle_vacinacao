@@ -108,6 +108,21 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$statusAtom = Atom(name: '_LoginControllerBase.status');
+
+  @override
+  AuthStatus get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(AuthStatus value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
   final _$loginAsyncAction = AsyncAction('_LoginControllerBase.login');
 
   @override
@@ -171,6 +186,7 @@ password: ${password},
 passwordVisible: ${passwordVisible},
 loading: ${loading},
 errorMessage: ${errorMessage},
+status: ${status},
 isPasswordValid: ${isPasswordValid}
     ''';
   }

@@ -1,13 +1,17 @@
+import 'package:controle_vacinacao/app/modules/history/history_page.dart';
+import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart'; 
+import 'package:get_it/get_it.dart';
 
+import 'app_controller.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_pages.dart';
 import 'modules/base/base_controller.dart';
 import 'modules/base/base_page.dart';
+import 'modules/home/home_controller.dart';
 import 'modules/login/login_controller.dart';
 import 'modules/login/login_page.dart';
- 
+import 'pages/splash_page.dart';
 
 class AppWidget extends StatefulWidget {
   @override
@@ -20,16 +24,19 @@ class _AppWidgetState extends State<AppWidget> {
     super.initState();
     //Register Singleton
     final getIt = GetIt.instance;
+    getIt.registerSingleton(AuthRepository());
+    getIt.registerSingleton(AppController());
     getIt.registerSingleton(BaseController());
     getIt.registerSingleton(LoginController());
+    getIt.registerSingleton(HomeController());
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Sistema de Vacinação Digital',
-      initialRoute: '/start',
+      title: 'SCD Digital',
+      initialRoute: AppPages.INIT,
       theme: ThemeData(
         primaryColor: primaryColor,
         accentColor: accentColor,
@@ -37,8 +44,8 @@ class _AppWidgetState extends State<AppWidget> {
           textTheme: TextTheme(
             headline6: TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
             ),
           ),
         ),
@@ -51,8 +58,10 @@ class _AppWidgetState extends State<AppWidget> {
         ),
       ),
       routes: {
+        AppPages.INIT: (ctx) => SplashPage(),
         AppPages.START: (ctx) => BasePage(),
         AppPages.LOGIN: (ctx) => LoginPage(),
+        AppPages.HISTORY: (ctx) => HistoryPage(),
       },
     );
   }

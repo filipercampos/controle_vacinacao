@@ -1,6 +1,7 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
 import 'package:controle_vacinacao/app/modules/history/history_page.dart';
 import 'package:controle_vacinacao/app/modules/home/home_page.dart';
+import 'package:controle_vacinacao/app/modules/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -29,15 +30,20 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        onPageChanged: (page) {},
         controller: controller.pageController,
         physics: NeverScrollableScrollPhysics(),
         children: [
           HomePage(),
-          HistoryPage()
+          HistoryPage(),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (id) {
+          setState(() {
+            controller.setPage(id);
+          });
+        },
         backgroundColor: Colors.white,
         currentIndex: controller.page,
         selectedItemColor: primaryColor,
@@ -57,6 +63,10 @@ class _BasePageState extends State<BasePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.description),
             label: "Histórico",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            label: "Meus Dados",
           )
         ],
       ),

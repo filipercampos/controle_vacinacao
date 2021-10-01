@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 padding: EdgeInsets.only(bottom: 40.0),
                 child: Image(
-                  image: AssetImage('assets/images/login.png'),
+                  image: AssetImage('assets/images/seringa.png'),
                   width: mediaQuery.size.width * 0.5,
                   height: mediaQuery.size.width * 0.5,
                 ),

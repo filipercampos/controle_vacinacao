@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/shared/enums/auth_status.dart';
 import 'package:controle_vacinacao/app/shared/global/firebase_errors.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,6 +44,9 @@ abstract class _LoginControllerBase with Store {
   @observable
   String errorMessage = '';
 
+  @observable
+  AuthStatus status = AuthStatus.IDLE;
+
   @action
   Future<void> login() async {
     try {
@@ -52,6 +56,7 @@ abstract class _LoginControllerBase with Store {
       loading = false;
       errorMessage = '';
       password = '';
+      status  = AuthStatus.SUCCESS;
     } catch (err) {
       loading = false;
       if (err is FirebaseAuthException) {
@@ -59,6 +64,7 @@ abstract class _LoginControllerBase with Store {
       } else {
         errorMessage = err is String ? err : '$err';
       }
+      status  = AuthStatus.FAIL;
     }
   }
 
