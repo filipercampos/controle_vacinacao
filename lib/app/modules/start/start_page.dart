@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
-import 'base_controller.dart';
+import 'start_controller.dart';
 
 class BasePage extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class BasePage extends StatefulWidget {
 }
 
 class _BasePageState extends State<BasePage> {
-  final controller = GetIt.I.get<BaseController>();
+  final controller = GetIt.I.get<StartController>();
   late ReactionDisposer disposer;
 
   @override

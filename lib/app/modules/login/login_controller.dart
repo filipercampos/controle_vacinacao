@@ -4,6 +4,7 @@ import 'package:controle_vacinacao/app/shared/global/validators.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'login_controller.g.dart';
@@ -11,9 +12,9 @@ part 'login_controller.g.dart';
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  _LoginControllerBase(this.auth);
-  
-  final AuthRepository auth;
+  _LoginControllerBase();
+
+  final auth = GetIt.I.get<AuthRepository>();
 
   @observable
   String username = '';
@@ -87,5 +88,4 @@ abstract class _LoginControllerBase with Store {
     }
     return false;
   }
- 
 }

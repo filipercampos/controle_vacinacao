@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/pages/success_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,26 @@ class AppController {
       Navigator.of(context).pushNamed(AppPages.HOME);
   }
 
+  void pushAdmin(context) {
+    Navigator.of(context).pushNamed(AppPages.ADMIN);
+  }
+
+  void pushControl(context) {
+    Navigator.of(context).pushNamed(AppPages.CONTROL);
+  }
+
+  void pushOperator(context) {
+    Navigator.of(context).pushNamed(AppPages.OPERATOR);
+  }
+
+  void pushVaccine(context) {
+    Navigator.of(context).pushNamed(AppPages.VACCINE);
+  }
+
+  void pushHistory(context) {
+    Navigator.of(context).pushNamed(AppPages.HISTORY);
+  }
+
   void pushProfile(context) {
     Navigator.of(context).pushNamed(AppPages.PROFILE);
   }
@@ -29,8 +50,19 @@ class AppController {
     Navigator.of(context).pushNamed(AppPages.SIGNUP);
   }
 
-  void pushSuccess(context) {
-    Navigator.of(context).popAndPushNamed('');
+  void pushSuccess(
+    context, {
+    required String routeBack,
+    required String message,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => SuccessScreen(
+          message: message,
+          routeBack: routeBack,
+        ),
+      ),
+    );
   }
 
   void popUntil(context, String route) {

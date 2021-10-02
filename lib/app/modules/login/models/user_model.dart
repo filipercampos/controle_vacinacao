@@ -26,10 +26,6 @@ class UserModel {
   DateTime? birthDate;
   Address? address;
 
-  bool get isAdmin => profile == ProfileEnum.A.value;
-  bool get isOperator => profile == ProfileEnum.O.value;
-  bool get isCidadao => profile == ProfileEnum.C.value;
-
   ///Document firebase
   late DocumentReference reference;
 

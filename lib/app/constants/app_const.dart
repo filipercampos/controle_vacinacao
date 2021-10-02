@@ -3,6 +3,7 @@ class AppConst {
   AppConst._();
   //COLLECTIONS
   static const String USERS = "users";
-  static const String VACCINEs = "vaccines";
+  static const String VACCINES = "vaccines";
+  static const String DOSES = "doses";
  
 }

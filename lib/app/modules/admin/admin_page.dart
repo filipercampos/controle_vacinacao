@@ -1,8 +1,7 @@
-import 'package:controle_vacinacao/app/constants/app_colors.dart';
+import 'package:controle_vacinacao/app/modules/admin/admin_controller.dart';
+import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-import 'admin_controller.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -12,6 +11,19 @@ class AdminPage extends StatefulWidget {
 
 class AdminPageState extends State<AdminPage> {
   final controller = GetIt.I.get<AdminController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.register();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +45,12 @@ class AdminPageState extends State<AdminPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: primaryColor,
-          foregroundColor: Colors.white,
+          icon: Icon(Icons.add),
+          label: Text('Operador'),
           onPressed: () {
-            //TODO cadastrar operador
+            //add operator
+            navigator.pushOperator(context);
           },
-          label: Text('Cadastrar Operador'),
         ));
   }
 }

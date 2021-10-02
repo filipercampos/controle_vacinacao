@@ -1,4 +1,8 @@
+import 'package:controle_vacinacao/app/modules/admin/admin_page.dart';
+import 'package:controle_vacinacao/app/modules/admin/pages/operator/operator_page.dart';
+import 'package:controle_vacinacao/app/modules/control/pages/vaccine/vaccine_page.dart';
 import 'package:controle_vacinacao/app/modules/history/history_page.dart';
+import 'package:controle_vacinacao/app/modules/profile/profile_page.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -6,8 +10,10 @@ import 'package:get_it/get_it.dart';
 import 'app_controller.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_pages.dart';
-import 'modules/base/base_controller.dart';
-import 'modules/base/base_page.dart';
+import 'modules/admin/admin_controller.dart';
+import 'modules/profile/profile_controller.dart';
+import 'modules/start/start_controller.dart';
+import 'modules/start/start_page.dart';
 import 'modules/home/home_controller.dart';
 import 'modules/login/login_controller.dart';
 import 'modules/login/login_page.dart';
@@ -26,9 +32,11 @@ class _AppWidgetState extends State<AppWidget> {
     final getIt = GetIt.instance;
     getIt.registerSingleton(AuthRepository());
     getIt.registerSingleton(AppController());
-    getIt.registerSingleton(BaseController());
-    getIt.registerSingleton(LoginController(GetIt.I.get<AuthRepository>()));
+    getIt.registerSingleton(StartController());
+    getIt.registerSingleton(LoginController());
     getIt.registerSingleton(HomeController());
+    getIt.registerSingleton(AdminController());
+    getIt.registerSingleton(ProfileController());
   }
 
   @override
@@ -41,6 +49,9 @@ class _AppWidgetState extends State<AppWidget> {
         primaryColor: primaryColor,
         accentColor: accentColor,
         appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
           textTheme: TextTheme(
             headline6: TextStyle(
               fontSize: 17,
@@ -48,6 +59,14 @@ class _AppWidgetState extends State<AppWidget> {
               color: Colors.white,
             ),
           ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: primaryColor,
+          foregroundColor: Colors.white,
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: primaryColor,
+          disabledColor: accentColor,
         ),
         textTheme: TextTheme(
           subtitle1: TextStyle(fontSize: 14),
@@ -62,6 +81,10 @@ class _AppWidgetState extends State<AppWidget> {
         AppPages.START: (ctx) => BasePage(),
         AppPages.LOGIN: (ctx) => LoginPage(),
         AppPages.HISTORY: (ctx) => HistoryPage(),
+        AppPages.ADMIN: (ctx) => AdminPage(),
+        AppPages.PROFILE: (ctx) => ProfilePage(),
+        AppPages.OPERATOR: (ctx) => OperatorPage(),
+        AppPages.VACCINE: (ctx) => VaccinePage(),
       },
     );
   }

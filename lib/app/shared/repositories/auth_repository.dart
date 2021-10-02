@@ -1,4 +1,5 @@
 import 'package:controle_vacinacao/app/modules/login/models/user_model.dart';
+import 'package:controle_vacinacao/app/shared/enums/profile_enum.dart';
 import 'package:controle_vacinacao/app/shared/repositories/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,10 @@ class AuthRepository {
   UserModel get user => _user!;
 
   bool get isAuth => _user != null;
-  bool get isOperador => isAuth && user.isOperator;
-  bool get isCidadao => isAuth && user.isCidadao;
+
+  bool get isAdmin => isAuth && user.profile == ProfileEnum.A.value;
+  bool get isOperator => isAuth && user.profile == ProfileEnum.O.value;
+  bool get isCidadao => isAuth && user.profile == ProfileEnum.C.value;
 
   ///Auth firebase [FirebaseAppAuth] with email and password
   @action

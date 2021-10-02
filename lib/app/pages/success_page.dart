@@ -1,5 +1,5 @@
 import 'package:controle_vacinacao/app/constants/app_pages.dart';
-import 'package:controle_vacinacao/app/modules/base/base_controller.dart';
+import 'package:controle_vacinacao/app/modules/start/start_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -8,11 +8,13 @@ class SuccessScreen extends StatelessWidget {
     this.title = 'Mensagem',
     this.message = 'Sucesso',
     this.backToHome = true,
+    this.routeBack,
     Key? key,
   }) : super(key: key);
   final String title;
   final String message;
   final bool backToHome;
+  final String? routeBack;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +28,10 @@ class SuccessScreen extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).popUntil(
-              ModalRoute.withName(AppPages.START),
+              ModalRoute.withName(routeBack ?? AppPages.START),
             );
-            if (backToHome) {
-              GetIt.I.get<BaseController>().goHome();
+            if (backToHome && routeBack == null) {
+              GetIt.I.get<StartController>().goHome();
             }
           },
           child: Column(
