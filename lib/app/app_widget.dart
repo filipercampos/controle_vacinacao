@@ -27,7 +27,7 @@ class _AppWidgetState extends State<AppWidget> {
     getIt.registerSingleton(AuthRepository());
     getIt.registerSingleton(AppController());
     getIt.registerSingleton(BaseController());
-    getIt.registerSingleton(LoginController());
+    getIt.registerSingleton(LoginController(GetIt.I.get<AuthRepository>()));
     getIt.registerSingleton(HomeController());
   }
 

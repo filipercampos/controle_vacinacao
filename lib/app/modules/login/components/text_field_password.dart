@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class TextFormFieldCpf extends StatelessWidget {
-  TextFormFieldCpf({
+class TextFieldPassword extends StatelessWidget {
+  TextFieldPassword({
     required this.hint,
     required this.prefix,
     this.suffix,
     this.obscure = false,
-    this.enabled = true,
+    this.enabled=true,
     this.textInputType,
     this.onChanged,
     this.controller,
     this.inputAction,
     this.initialValue,
-    this.inputFormatters,
   });
 
-  final TextEditingController? controller;
   final String hint;
+  final TextEditingController? controller;
   final String? initialValue;
   final Widget? prefix;
   final Widget? suffix;
   final bool obscure;
+  final bool enabled;
   final TextInputType? textInputType;
   final Function(String)? onChanged;
-  final bool enabled;
   final TextInputAction? inputAction;
-  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +35,9 @@ class TextFormFieldCpf extends StatelessWidget {
         keyboardType: textInputType,
         onChanged: onChanged,
         enabled: enabled,
-        inputFormatters: inputFormatters,
-        textAlignVertical: TextAlignVertical.center,
-        textInputAction: inputAction,
         initialValue: initialValue,
+        autocorrect: false,
+        textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           hintText: hint,
           prefixIcon: prefix,
@@ -63,13 +59,14 @@ class TextFormFieldCpf extends StatelessWidget {
             borderRadius: BorderRadius.circular(32.0),
           ),
         ),
-        validator: (String? value) {
+        validator: (value) {
           if (value == null || value.trim().isEmpty) {
-            return 'Informe o $hint';
+            return 'Informe a $hint';
           } else
             return null;
         },
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        textInputAction: inputAction,
       ),
     );
   }

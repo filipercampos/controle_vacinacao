@@ -8,7 +8,7 @@ import 'firebaseapp_auth.dart';
 
 class AuthRepository {
   AuthRepository() {
-    _loadCurrentUser();
+    loadCurrentUser();
   }
   final _userRepository = UserRepository();
 
@@ -16,7 +16,9 @@ class AuthRepository {
 
   UserModel get user => _user!;
 
-   bool get isAuth => _user != null;
+  bool get isAuth => _user != null;
+  bool get isOperador => isAuth && user.isOperator;
+  bool get isCidadao => isAuth && user.isCidadao;
 
   ///Auth firebase [FirebaseAppAuth] with email and password
   @action
@@ -24,7 +26,6 @@ class AuthRepository {
     try {
       final auth = FirebaseAppAuth(email: user, password: password);
       final firebaseUser = await auth.authenticate();
-
       return firebaseUser;
     } catch (err) {
       debugPrint('auth $err');
@@ -40,17 +41,18 @@ class AuthRepository {
 
   ///Carrega o [User] Seta o usuário autenticado com suas permissões
   ///Verifica se existe um usuário autenticado
-  Future _loadCurrentUser({User? firebaseUser}) async {
+  Future loadCurrentUser({User? firebaseUser}) async {
     //verifica se o usuário informado
     final currentUser = firebaseUser ?? getCurrentUser();
 
     if (currentUser != null) {
+      debugPrint('Loading user');
       try {
         _user = await _userRepository.getById(currentUser.uid);
-
       } catch (error) {
         //logout
-        signOut();
+        // signOut();
+        throw error;
       }
     } else {
       _user = null;

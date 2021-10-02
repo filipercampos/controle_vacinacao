@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controle_vacinacao/app/modules/login/models/address.dart';
+import 'package:controle_vacinacao/app/shared/enums/profile_enum.dart';
 import 'package:controle_vacinacao/app/shared/utils/date_util.dart';
 
 class UserModel {
@@ -11,6 +12,7 @@ class UserModel {
     this.password = '',
     this.phone = '',
     this.birthDate,
+    this.profile = 'C',
     this.address,
   });
 
@@ -20,8 +22,13 @@ class UserModel {
   String cpf;
   String phone;
   String password;
+  String profile = 'A';
   DateTime? birthDate;
   Address? address;
+
+  bool get isAdmin => profile == ProfileEnum.A.value;
+  bool get isOperator => profile == ProfileEnum.O.value;
+  bool get isCidadao => profile == ProfileEnum.C.value;
 
   ///Document firebase
   late DocumentReference reference;
@@ -34,6 +41,7 @@ class UserModel {
         email: json['email'] as String,
         phone: json['phone'] ?? '',
         cpf: json['cpf'] ?? '',
+        profile: json['profile'] ?? ProfileEnum.A.toString(),
         birthDate: DateUtil.toDateFromTimestamp(json['birthDate']));
     model.reference = document.reference;
 
@@ -71,6 +79,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
+      'email': name,
       'cpf': cpf,
       'birthDate': birthDate,
     };

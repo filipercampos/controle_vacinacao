@@ -10,7 +10,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -34,9 +33,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                     alignment: Alignment.center,
                     child: Image(
+                      isAntiAlias: true,
                       image: AssetImage('assets/images/seringa.jpeg'),
-                      width: mediaQuery.size.width * 0.5,
-                      height: mediaQuery.size.width * 0.5,
                     ),
                   ),
                 ),

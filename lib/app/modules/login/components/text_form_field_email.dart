@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class TextFieldLogin extends StatelessWidget {
-  TextFieldLogin({
+class TextFormFieldEmail extends StatelessWidget {
+  TextFormFieldEmail({
     required this.hint,
     required this.prefix,
     this.suffix,
     this.obscure = false,
-    this.enabled=true,
+    this.enabled = true,
     this.textInputType,
     this.onChanged,
     this.controller,
     this.inputAction,
     this.initialValue,
+    this.inputFormatters,
   });
 
-  final String hint;
   final TextEditingController? controller;
+  final String hint;
   final String? initialValue;
   final Widget? prefix;
   final Widget? suffix;
   final bool obscure;
-  final bool enabled;
   final TextInputType? textInputType;
   final Function(String)? onChanged;
+  final bool enabled;
   final TextInputAction? inputAction;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,10 @@ class TextFieldLogin extends StatelessWidget {
         keyboardType: textInputType,
         onChanged: onChanged,
         enabled: enabled,
-        initialValue: initialValue,
-        autocorrect: false,
+        inputFormatters: inputFormatters,
         textAlignVertical: TextAlignVertical.center,
+        textInputAction: inputAction,
+        initialValue: initialValue,
         decoration: InputDecoration(
           hintText: hint,
           prefixIcon: prefix,
@@ -59,14 +63,13 @@ class TextFieldLogin extends StatelessWidget {
             borderRadius: BorderRadius.circular(32.0),
           ),
         ),
-        validator: (value) {
+        validator: (String? value) {
           if (value == null || value.trim().isEmpty) {
-            return 'Informe $hint.';
+            return 'Informe o email';
           } else
             return null;
         },
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        textInputAction: inputAction,
       ),
     );
   }

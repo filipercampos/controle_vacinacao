@@ -20,13 +20,12 @@ class _SplashPageState extends State<SplashPage>
   @override
   void initState() {
     super.initState();
-
     //init obscure
     controller.passwordVisible = false;
     //login global
     disposer = reaction((_) => controller.status, (status) {
       if (status == AuthStatus.SUCCESS) {
-        Future.delayed(Duration(milliseconds: 1800), () {
+        Future.delayed(Duration(milliseconds: 300), () {
           navigator.pushHome(context);
         });
       }
@@ -42,25 +41,14 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return Center(
       child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Theme.of(context).accentColor,
-              Theme.of(context).primaryColor
-            ],
-          ),
-        ),
+        color: Colors.white,
         child: Center(
           child: Container(
+            padding: EdgeInsets.all(20),
             child: Image(
-              image: AssetImage('assets/images/seringa.jpeg'),
-              width: mediaQuery.size.width * 0.3,
-              height: mediaQuery.size.width * 0.3,
+              image: AssetImage('assets/images/splash.jpeg'),
             ),
           ),
         ),
@@ -69,7 +57,7 @@ class _SplashPageState extends State<SplashPage>
   }
 
   Future<void> _startApp() async {
-    Future.delayed(Duration(seconds: 2)).then(
+    Future.delayed(Duration(seconds: 1)).then(
       (_) {
         final auth = GetIt.I.get<AuthRepository>();
         if (auth.isAuth) {

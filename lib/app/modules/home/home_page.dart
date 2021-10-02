@@ -21,10 +21,16 @@ class HomePageState extends State<HomePage> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.all(12),
-            child: Text('Bem-vindo\n${controller.user.displayName}'),
+            child: Text(
+              'Bem-vindo: ${controller.user.displayName}',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
-      ),
+      ), 
     );
   }
 }
