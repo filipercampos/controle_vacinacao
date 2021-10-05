@@ -3,6 +3,8 @@ import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../shared/components/custom_drawer.dart';
+
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
   @override
@@ -30,9 +32,11 @@ class AdminPageState extends State<AdminPage> {
         appBar: AppBar(
           title: Text('Administrador'),
         ),
+        drawer: CustomDrawer(),
         body: Column(
           children: <Widget>[
             Container(
+              margin: EdgeInsets.all(8),
               padding: EdgeInsets.all(12),
               child: Text(
                 'Bem-vindo: ${controller.user.displayName}',

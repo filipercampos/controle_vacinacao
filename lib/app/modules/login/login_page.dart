@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/modules/login/components/signin_text.dart';
 import 'package:flutter/material.dart';
 
 import 'components/login_form_widget.dart';
@@ -47,6 +48,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: LoginFormWidget(),
                 ),
               ),
+              SizedBox(height: 10),
+              SigninText(),
             ],
           ),
         ),

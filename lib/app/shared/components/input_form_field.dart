@@ -38,6 +38,7 @@ class InputFormField extends StatelessWidget {
     this.prefixIcon,
     this.countText = '',
     this.inputFormattersLength,
+    this.obscure=false,
   })  : this.textInputAction = onSubmitted == null
             ? TextInputAction.done
             : textInputAction ?? TextInputAction.next,
@@ -45,7 +46,7 @@ class InputFormField extends StatelessWidget {
 
   final bool enabled;
   final String? initialValue;
-  final Function(String?)? onChanged;
+  final Function(String)? onChanged;
   final Function(String?)? onSaved;
   final Function(String)? onSubmitted;
   final Function(String)? validator;
@@ -76,6 +77,7 @@ class InputFormField extends StatelessWidget {
   final int? inputFormattersLength;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final bool obscure;
   final Key? key;
 
   @override
@@ -89,7 +91,7 @@ class InputFormField extends StatelessWidget {
       onSaved: onSaved,
       validator: (value) {
         if (this.validator != null) {
-          return validator!(value ?? '');
+          return this.validator!(value ?? '');
         }
         return null;
       },
@@ -126,6 +128,7 @@ class InputFormField extends StatelessWidget {
       ),
       cursorColor: Colors.black,
       readOnly: readOnly,
+      obscureText: obscure,
       decoration: inputDecoration == null
           ? InputDecoration(
               fillColor: Colors.white,

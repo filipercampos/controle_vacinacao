@@ -1,17 +1,19 @@
+import 'package:controle_vacinacao/app/modules/admin/pages/operator/operator_validator.dart';
 import 'package:controle_vacinacao/app/shared/global/firebase_errors.dart';
-import 'package:controle_vacinacao/app/shared/global/validators.dart';
-import 'package:controle_vacinacao/app/shared/repositories/user_repository.dart';
+import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:controle_vacinacao/app/shared/utils/date_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
+
 part 'operator_controller.g.dart';
 
 class OperatorController = _OperatorControllerBase with _$OperatorController;
 
-abstract class _OperatorControllerBase with Store {
-  final _userRepository = UserRepository();
+abstract class _OperatorControllerBase with Store,OperatorValidator {
+  final _auth = GetIt.I.get<AuthRepository>();
   final formKey = GlobalKey<FormState>();
   final birthDateController = TextEditingController();
   final maskCpf = MaskTextInputFormatter(
@@ -41,6 +43,8 @@ abstract class _OperatorControllerBase with Store {
 
   Future<void> saveOperator() async {
     try {
+    final _userRepository = _auth.userRepository;
+
       loading = true;
       //TODO save operator
       final userCpf = await _userRepository.getUserByCpf(cpf);
@@ -65,50 +69,7 @@ abstract class _OperatorControllerBase with Store {
   bool validate() {
     return (formKey.currentState != null && formKey.currentState!.validate());
   }
-
-  String? get validateName {
-    if (name.isEmpty) {
-      return 'Informe seu nome completo';
-    } else if (name.length <= 5) {
-      return 'O nome de conter pelo menos 6 caracteres';
-    } else if (name.split(' ').length < 2) {
-      return 'Informe nome e sobrenome';
-    } else if (RegExp('[0-9]').hasMatch(name)) {
-      return 'Nome inválido';
-    }
-    return null;
-  }
-
-  String? get validateCpf {
-    if (isCpfValid(cpf)) {
-      return null;
-    } else {
-      return "CPF inválido";
-    }
-  }
-
-  String? get validateEmail {
-    if (isEmailValid(email)) {
-      return null;
-    } else {
-      return "E-mail válido";
-    }
-  }
-
-  String? get validateBirthDate {
-    if (birthDate == null) {
-      return "Informe a data de nascimento";
-    } else {
-      return null;
-    }
-  }
-
-  @computed
-  bool get isFormValid =>
-      validateName == null &&
-      validateCpf == null &&
-      validateEmail == null &&
-      validateBirthDate == null;
+ 
 
   @action
   dispose() {

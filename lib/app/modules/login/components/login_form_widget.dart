@@ -15,10 +15,7 @@ class LoginFormWidget extends StatefulWidget {
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
   final controller = GetIt.I<LoginController>();
-  // final maskCpf = MaskTextInputFormatter(
-  //   mask: "###.###.###-##",
-  //   filter: {"#": RegExp(r'[0-9]')},
-  // );
+
 
   @override
   void initState() {
@@ -35,7 +32,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             children: <Widget>[
               TextFormFieldCpf(
                 hint: 'Usuário',
-                // inputFormatters: [maskCpf],
+                inputFormatters: [controller.maskCpf],
                 initialValue: controller.username,
                 prefix: Icon(Icons.account_circle),
                 textInputType: TextInputType.number,

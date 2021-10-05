@@ -1,10 +1,10 @@
 import 'package:controle_vacinacao/app/shared/enums/auth_status.dart';
 import 'package:controle_vacinacao/app/shared/global/firebase_errors.dart';
-import 'package:controle_vacinacao/app/shared/global/validators.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 
 part 'login_controller.g.dart';
@@ -26,7 +26,8 @@ abstract class _LoginControllerBase with Store {
   bool passwordVisible = false;
 
   @action
-  void setUserName(String value) => username = value;
+  void setUserName(String value) =>
+      username = value.replaceAll('.', '').replaceAll('-', '');
 
   @action
   void setPassword(String value) => password = value;
@@ -52,17 +53,21 @@ abstract class _LoginControllerBase with Store {
   @observable
   AuthStatus status = AuthStatus.IDLE;
   final formKey = GlobalKey<FormState>();
+  final maskCpf = MaskTextInputFormatter(
+    mask: "###.###.###-##",
+    filter: {"#": RegExp(r'[0-9]')},
+  );
 
   @action
   Future<void> login() async {
     try {
       loading = true;
       errorMessage = '';
-
-      if (isNumeric(username)) {
-        username = username.replaceAll('.', '').replaceAll('-', '');
+      final user = await auth.userRepository.getUserByCpf(username);
+      if (user == null) {
+        throw 'CPF não encontrado';
       }
-      final firebaseUser = await auth.auth(user: username, password: password);
+      final firebaseUser = await auth.auth(email: user.email, password: password);
       await auth.loadCurrentUser(firebaseUser: firebaseUser);
       loading = false;
       errorMessage = '';

@@ -44,7 +44,7 @@ class UserRepository {
       }
       return null;
     } catch (error) {
-      debugPrint('Error user_firebase_repository.getUsuarioByEmail: $error');
+      debugPrint('user_firebase_repository.getUserByCpf: $error');
       return null;
     }
   }

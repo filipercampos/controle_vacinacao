@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/shared/components/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,6 +18,7 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Home'),
       ),
+      drawer: CustomDrawer(),
       body: Column(
         children: <Widget>[
           Container(
@@ -30,7 +32,7 @@ class HomePageState extends State<HomePage> {
             ),
           ),
         ],
-      ), 
+      ),
     );
   }
 }

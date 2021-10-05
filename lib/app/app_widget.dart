@@ -3,6 +3,7 @@ import 'package:controle_vacinacao/app/modules/admin/pages/operator/operator_pag
 import 'package:controle_vacinacao/app/modules/control/pages/vaccine/vaccine_page.dart';
 import 'package:controle_vacinacao/app/modules/history/history_page.dart';
 import 'package:controle_vacinacao/app/modules/profile/profile_page.dart';
+import 'package:controle_vacinacao/app/modules/signup/signup_page.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -43,7 +44,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'SCD Digital',
+      title: 'SCV Digital',
       initialRoute: AppPages.INIT,
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -85,6 +86,7 @@ class _AppWidgetState extends State<AppWidget> {
         AppPages.PROFILE: (ctx) => ProfilePage(),
         AppPages.OPERATOR: (ctx) => OperatorPage(),
         AppPages.VACCINE: (ctx) => VaccinePage(),
+        AppPages.SIGNUP: (ctx) => SignupPage(),
       },
     );
   }

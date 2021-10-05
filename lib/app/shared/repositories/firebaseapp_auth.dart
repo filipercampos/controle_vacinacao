@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirebaseAppAuth  {
+class FirebaseAppAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -32,7 +32,7 @@ class FirebaseAppAuth  {
       throw e.code;
     }
   }
- 
+
   Future<void> signOut() async {
     await _auth.signOut();
     _auth.authStateChanges();

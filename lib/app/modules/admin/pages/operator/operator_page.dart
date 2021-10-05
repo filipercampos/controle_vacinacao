@@ -1,8 +1,6 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
-import 'package:controle_vacinacao/app/constants/app_pages.dart';
 import 'package:controle_vacinacao/app/shared/components/date_picker_widget.dart';
 import 'package:controle_vacinacao/app/shared/components/input_form_field_border.dart';
-import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:controle_vacinacao/app/shared/utils/animation_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -44,36 +42,30 @@ class OperatorPageState extends State<OperatorPage> {
                 InputFormFieldBorder(
                   hintText: 'Nome completo',
                   onChanged: controller.setName,
-                  errorText: controller.validateName,
+                  validator: controller.validateName,
                 ),
                 SizedBox(height: 8),
                 InputFormFieldBorder(
                   hintText: 'CPF',
                   onChanged: controller.setCpf,
-                  errorText: controller.validateCpf,
+                  validator: controller.validateCpf,
                   inputFormatters: [controller.maskCpf],
                 ),
                 SizedBox(height: 8),
                 InputFormFieldBorder(
                   hintText: 'Email',
                   onChanged: controller.setEmail,
-                  errorText: controller.validateEmail,
+                  validator: controller.validateEmail,
                   textInputType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 8),
                 DatePickerWidget(
                   usePrefixIcon: true,
                   controller: controller.birthDateController,
-                  onChanged: controller.setBirthDate,
+                  onDate: controller.setBirthDate,
                   labelText: 'Data Nascimento',
                   hintText: 'Data Nascimento',
-                  validator: (data) {
-                    if (data.isEmpty) {
-                      return controller.validateBirthDate;
-                    }
-                     controller.setBirthDate(data);
-                    return null;
-                  },
+                  validator: controller.validateBirthDate,
                 ),
               ],
             ),
@@ -85,7 +77,7 @@ class OperatorPageState extends State<OperatorPage> {
         return FloatingActionButton.extended(
           onPressed: () {
             final scafMesseger = ScaffoldMessenger.of(context);
-            if (controller.validate() && controller.isFormValid) {
+            if (controller.validate()) {
               controller.saveOperator().then(
                 (_) {
                   // navigator.pushSuccess(

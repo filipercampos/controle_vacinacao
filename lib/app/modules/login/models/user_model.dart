@@ -7,8 +7,9 @@ class UserModel {
   UserModel({
     required this.id,
     required this.name,
+    required this.email,
     required this.cpf,
-    this.email = '',
+    required this.civ,
     this.password = '',
     this.phone = '',
     this.birthDate,
@@ -23,6 +24,7 @@ class UserModel {
   String phone;
   String password;
   String profile = 'A';
+  String civ;
   DateTime? birthDate;
   Address? address;
 
@@ -35,7 +37,7 @@ class UserModel {
         id: document.id,
         name: json['name'] as String,
         email: json['email'] as String,
-        phone: json['phone'] ?? '',
+        civ: json['civ'] ?? '',
         cpf: json['cpf'] ?? '',
         profile: json['profile'] ?? ProfileEnum.A.toString(),
         birthDate: DateUtil.toDateFromTimestamp(json['birthDate']));
@@ -75,8 +77,9 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'email': name,
+      'email': email,
       'cpf': cpf,
+      'civ': civ,
       'birthDate': birthDate,
     };
   }

@@ -1,6 +1,5 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
 import 'package:controle_vacinacao/app/shared/extensions/date_extension.dart';
-import 'package:controle_vacinacao/app/shared/utils/date_util.dart';
 import 'package:flutter/material.dart';
 
 import 'input_form_field.dart';
@@ -9,7 +8,7 @@ class DatePickerWidget extends StatefulWidget {
   DatePickerWidget({
     required this.hintText,
     required this.labelText,
-    required this.controller,
+    this.controller,
     this.onChanged,
     this.onDate,
     this.validator,
@@ -21,13 +20,13 @@ class DatePickerWidget extends StatefulWidget {
     this.usePrefixIcon = false,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
   final String labelText;
   final FocusNode? focusNode;
   final FocusNode? newFocusNode;
   final Function(String?)? onChanged;
-  final Function(String)? validator;
+  final Function(String?)? validator;
   final Function(DateTime?)? onDate;
   final bool enable;
   final EdgeInsetsGeometry? margin;
@@ -43,6 +42,16 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   //Neste caso eu preciso invocar o metodo manualmente
   //A partir do state do context do widget
   String? _errorText;
+  late TextEditingController controller;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller == null) {
+      controller = TextEditingController();
+    } else {
+      controller = widget.controller!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +60,6 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       onTap: widget.enable
           ? () {
               _selectDate(
-                widget.controller,
                 DateTime(now.year, DateTime.now().month, now.day),
                 DateTime(now.year - 70, DateTime.now().month, 1),
               );
@@ -61,19 +69,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         child: Container(
           child: InputFormField(
             hintText: widget.hintText,
-            controller: widget.controller,
+            controller: controller,
             labelText: widget.labelText,
             icon: !widget.usePrefixIcon ? Icon(Icons.date_range) : null,
             prefixIcon: widget.usePrefixIcon ? Icon(Icons.date_range) : null,
             focusNode: widget.newFocusNode,
             newFocusNode: widget.newFocusNode,
             textInputType: TextInputType.datetime,
-            onChanged: (value) {
-              widget.controller.text = value ?? '';
-              if (widget.onChanged != null) {
-                widget.onChanged!(value);
-              }
-            },
             validator: widget.validator,
             errorText: _errorText,
             textInputAction: widget.textInputAction,
@@ -84,8 +86,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   }
 
   /// Seleciona a data no calendário
-  Future _selectDate(TextEditingController controller, DateTime initialDate,
-      DateTime firstDate) async {
+  Future _selectDate(DateTime initialDate, DateTime firstDate) async {
     final DateTime now = DateTime.now();
     final picked = await showDatePicker(
       context: context,
@@ -115,13 +116,12 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       controller.text = picked.toFormat();
       if (widget.validator != null) {
         _errorText = widget.validator!(controller.text);
-        if (_errorText == null && widget.onDate != null) {
-          try {
-            widget.onDate!(DateUtil.toDate(controller.text));
-          } catch (error) {
-            return 'Data inválida';
-          }
-        }
+      }
+      if (widget.onChanged != null) {
+        widget.onChanged!(controller.text);
+      }
+      if (widget.onDate != null) {
+        widget.onDate!(picked);
       }
 
       setState(() {});

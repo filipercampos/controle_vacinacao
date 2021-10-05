@@ -1,6 +1,6 @@
 import 'package:controle_vacinacao/app/shared/global/validators.dart';
 
-mixin UserValidator {
+mixin OperatorValidator {
   String? validateName(String? name) {
     if (name == null || name.isEmpty) {
       return 'Informe seu nome completo';
@@ -23,18 +23,11 @@ mixin UserValidator {
   }
 
   String? validateEmail(String? email) {
-    if (email == null || isEmailValid(email)) {
+    if (isEmailValid(email)) {
       return null;
     } else {
       return "E-mail válido";
     }
-  }
-
-  String? validatePhone(String? phone) {
-    if (phone == null || phone.length > 13) {
-      return null;
-    }
-    return "Celular inválido";
   }
 
   String? validateBirthDate(String? birthDate) {

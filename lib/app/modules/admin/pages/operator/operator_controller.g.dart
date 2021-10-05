@@ -9,14 +9,6 @@ part of 'operator_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$OperatorController on _OperatorControllerBase, Store {
-  Computed<bool>? _$isFormValidComputed;
-
-  @override
-  bool get isFormValid =>
-      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
-              name: '_OperatorControllerBase.isFormValid'))
-          .value;
-
   final _$loadingAtom = Atom(name: '_OperatorControllerBase.loading');
 
   @override
@@ -157,8 +149,7 @@ loading: ${loading},
 name: ${name},
 cpf: ${cpf},
 email: ${email},
-birthDate: ${birthDate},
-isFormValid: ${isFormValid}
+birthDate: ${birthDate}
     ''';
   }
 }

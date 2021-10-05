@@ -3,6 +3,7 @@ import 'package:controle_vacinacao/app/shared/enums/profile_enum.dart';
 import 'package:controle_vacinacao/app/shared/repositories/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobx/mobx.dart';
 
 import 'firebaseapp_auth.dart';
@@ -11,8 +12,8 @@ class AuthRepository {
   AuthRepository() {
     loadCurrentUser();
   }
-  final _userRepository = UserRepository();
-
+  final userRepository = UserRepository();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   UserModel? _user;
 
   UserModel get user => _user!;
@@ -25,9 +26,9 @@ class AuthRepository {
 
   ///Auth firebase [FirebaseAppAuth] with email and password
   @action
-  Future<User?> auth({required String user, required String password}) async {
+  Future<User?> auth({required String email, required String password}) async {
     try {
-      final auth = FirebaseAppAuth(email: user, password: password);
+      final auth = FirebaseAppAuth(email: email, password: password);
       final firebaseUser = await auth.authenticate();
       return firebaseUser;
     } catch (err) {
@@ -51,7 +52,7 @@ class AuthRepository {
     if (currentUser != null) {
       debugPrint('Loading user');
       try {
-        _user = await _userRepository.getById(currentUser.uid);
+        _user = await userRepository.getById(currentUser.uid);
       } catch (error) {
         //logout
         // signOut();
@@ -62,12 +63,32 @@ class AuthRepository {
     }
   }
 
+  ///Create firebase [User] with email and password
+  Future<User?> createUser(
+      {required String email, required String password}) async {
+    try {
+      final UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return result.user;
+    } on PlatformException catch (e) {
+      debugPrint('$e');
+      throw e.code;
+    }
+  }
+
+  Future<void> deleteUser(User user) async {
+    await user.delete();
+  }
+
   ///Logout
   @action
   Future<void> signOut() async {
     print("Logout");
     try {
       //logout
+      _user = null;
       await FirebaseAuth.instance.signOut();
     } catch (error) {
       debugPrint('signOut $error');
