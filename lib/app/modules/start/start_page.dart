@@ -2,6 +2,7 @@ import 'package:controle_vacinacao/app/constants/app_colors.dart';
 import 'package:controle_vacinacao/app/modules/history/history_page.dart';
 import 'package:controle_vacinacao/app/modules/home/home_page.dart';
 import 'package:controle_vacinacao/app/modules/profile/profile_page.dart';
+import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -20,10 +21,18 @@ class _BasePageState extends State<BasePage> {
   @override
   void initState() {
     super.initState();
-    disposer = reaction(
-      (_) => controller.page,
-      (int page) => controller.pageController.jumpToPage(page),
-    );
+    disposer = reaction((_) => controller.page, (int page) {
+      if (page == 2) {
+        navigator.pushProfile(context).then((value) {
+          controller.setPage(0);
+          setState(() {
+            
+          });
+        });
+      } else {
+        controller.pageController.jumpToPage(page);
+      }
+    });
   }
 
   @override

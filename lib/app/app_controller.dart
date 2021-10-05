@@ -42,8 +42,8 @@ class AppController {
     Navigator.of(context).pushNamed(AppPages.HISTORY);
   }
 
-  void pushProfile(context) {
-    Navigator.of(context).pushNamed(AppPages.PROFILE);
+  Future<void> pushProfile(context) async {
+    await Navigator.of(context, rootNavigator: true).pushNamed(AppPages.PROFILE);
   }
 
   void pushSignup(context) {

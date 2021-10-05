@@ -26,8 +26,7 @@ abstract class _LoginControllerBase with Store {
   bool passwordVisible = false;
 
   @action
-  void setUserName(String value) =>
-      username = value.replaceAll('.', '').replaceAll('-', '');
+  void setUserName(String value) => username = value;
 
   @action
   void setPassword(String value) => password = value;
@@ -67,7 +66,8 @@ abstract class _LoginControllerBase with Store {
       if (user == null) {
         throw 'CPF não encontrado';
       }
-      final firebaseUser = await auth.auth(email: user.email, password: password);
+      final firebaseUser =
+          await auth.auth(email: user.email, password: password);
       await auth.loadCurrentUser(firebaseUser: firebaseUser);
       loading = false;
       errorMessage = '';
