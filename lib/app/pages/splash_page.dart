@@ -1,7 +1,9 @@
 import 'package:controle_vacinacao/app/modules/login/login_controller.dart';
 import 'package:controle_vacinacao/app/modules/start/start_controller.dart';
+import 'package:controle_vacinacao/app/shared/enums/auth_status.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -11,16 +13,21 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   final controller = GetIt.I.get<LoginController>();
+  late ReactionDisposer disposer;
 
   @override
   void initState() {
     super.initState();
     //init obscure
     controller.passwordVisible = false;
-    //call app
+    //login global
+    disposer = reaction((_) => controller.status, (status) {
+      if (status == AuthStatus.SUCCESS) {
+        _startApp();
+      }
+    });
     _startApp();
   }
-
   @override
   void dispose() {
     super.dispose();

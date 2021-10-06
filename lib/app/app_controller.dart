@@ -1,8 +1,10 @@
 import 'package:controle_vacinacao/app/pages/success_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'constants/app_pages.dart';
+import 'modules/start/start_controller.dart';
 
 class AppController {
   ///Replace page
@@ -12,7 +14,9 @@ class AppController {
 
   ///Replace page and go to home
   void pushStart(context) {
-    Navigator.of(context).pushNamed(AppPages.START);
+    //define and start module
+    final route = GetIt.I.get<StartController>().initialModule;
+    Navigator.of(context).pushReplacementNamed(route);
   }
 
   void pushHome(context, {bool replace = false}) {
@@ -43,7 +47,8 @@ class AppController {
   }
 
   Future<void> pushProfile(context) async {
-    await Navigator.of(context, rootNavigator: true).pushNamed(AppPages.PROFILE);
+    await Navigator.of(context, rootNavigator: true)
+        .pushNamed(AppPages.PROFILE);
   }
 
   void pushSignup(context) {

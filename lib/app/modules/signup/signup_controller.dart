@@ -100,8 +100,6 @@ abstract class _SignupControllerBase with Store, SingupValidator {
         throw 'O CPF $cpf já está em uso';
       }
 
-      usuario.civ = Uuid().v1();
-
       //save user collection
       await _auth.userRepository.saveUserData(usuario);
 

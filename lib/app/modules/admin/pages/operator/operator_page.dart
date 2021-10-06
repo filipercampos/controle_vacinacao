@@ -1,6 +1,8 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
+import 'package:controle_vacinacao/app/constants/app_pages.dart';
 import 'package:controle_vacinacao/app/shared/components/date_picker_widget.dart';
 import 'package:controle_vacinacao/app/shared/components/input_form_field_border.dart';
+import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:controle_vacinacao/app/shared/utils/animation_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -80,11 +82,12 @@ class OperatorPageState extends State<OperatorPage> {
             if (controller.validate()) {
               controller.saveOperator().then(
                 (_) {
-                  // navigator.pushSuccess(
-                  //   context,
-                  //   routeBack: AppPages.ADMIN,
-                  //   message: 'Operador cadastrado com sucesso',
-                  // );
+                  navigator.pushSuccess(
+                    context,
+                    routeBack: AppPages.ADMIN,
+                    message: 'Operador cadastrado com sucesso\n\n' +
+                        'Anote sua senha: ${controller.password}',
+                  );
                 },
               ).catchError((error) {
                 scafMesseger.removeCurrentSnackBar();
