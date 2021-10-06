@@ -10,7 +10,8 @@ class AppPages {
   static const String ADMIN = "/admin";
   static const String OPERATOR = "/operator";
   static const String CONTROL = "/control";
-  static const String VACCINE = "/vaccines";
+  static const String VACCINE = "/vaccine";
+  static const String QRCODE = "/qrcode";
   static const String SIGNUP = "/signup";
   static const String SUCCESS = "/success";
 }

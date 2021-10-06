@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 class ControlPage extends StatefulWidget {
@@ -15,6 +16,13 @@ class ControlPageState extends State<ControlPage> {
       ),
       body: Column(
         children: <Widget>[],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(Icons.add),
+        label: Text('Cadastar Vacina'),
+        onPressed: () {
+          navigator.pushVaccine(context);
+        },
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:controle_vacinacao/app/modules/login/models/user_model.dart';
 import 'package:controle_vacinacao/app/shared/enums/profile_enum.dart';
 import 'package:controle_vacinacao/app/shared/global/firebase_errors.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
-import 'package:controle_vacinacao/app/shared/utils/date_util.dart';
 import 'package:controle_vacinacao/app/shared/utils/random_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

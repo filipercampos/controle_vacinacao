@@ -1,5 +1,4 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
-import 'package:controle_vacinacao/app/constants/app_pages.dart';
 import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

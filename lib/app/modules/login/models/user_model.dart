@@ -28,9 +28,6 @@ class UserModel {
   DateTime? birthDate;
   Address? address;
 
-  ///Document firebase
-  late DocumentReference reference;
-
   factory UserModel.fromDocument(DocumentSnapshot document) {
     final json = document.data() as Map<String, dynamic>;
     final model = UserModel(
@@ -41,7 +38,6 @@ class UserModel {
         cpf: json['cpf'] ?? '',
         profile: json['profile'] ?? ProfileEnum.A.toString(),
         birthDate: DateUtil.toDateFromTimestamp(json['birthDate']));
-    model.reference = document.reference;
 
     if (json.containsKey('address') && json['address'] is Map) {
       model.address = Address.fromJson(json['address']);

@@ -12,6 +12,8 @@ import 'app_controller.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_pages.dart';
 import 'modules/admin/admin_controller.dart';
+import 'modules/control/control_controller.dart';
+import 'modules/control/pages/read_code/read_code_page.dart';
 import 'modules/profile/profile_controller.dart';
 import 'modules/start/start_controller.dart';
 import 'modules/start/start_page.dart';
@@ -38,6 +40,7 @@ class _AppWidgetState extends State<AppWidget> {
     getIt.registerSingleton(HomeController());
     getIt.registerSingleton(AdminController());
     getIt.registerSingleton(ProfileController());
+    getIt.registerSingleton(ControlController());
   }
 
   @override
@@ -86,6 +89,7 @@ class _AppWidgetState extends State<AppWidget> {
         AppPages.PROFILE: (ctx) => ProfilePage(),
         AppPages.OPERATOR: (ctx) => OperatorPage(),
         AppPages.VACCINE: (ctx) => VaccinePage(),
+        AppPages.QRCODE: (ctx) => ReadCodePage(),
         AppPages.SIGNUP: (ctx) => SignupPage(),
       },
     );
