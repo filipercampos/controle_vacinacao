@@ -73,6 +73,7 @@ abstract class _OperatorControllerBase with Store, OperatorValidator {
         name: name,
         email: email,
         civ: Uuid().v1(),
+        birthDate: birthDate,
         profile: ProfileEnum.O.value,
       );
 
