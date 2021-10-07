@@ -144,12 +144,15 @@ abstract class FirebaseRepository<T> implements IRepository {
 
   ///Save [Map] in firebase
   @override
-  Future<void> save(Map<String, dynamic> json, {String? id}) async {
+  Future<String> save(Map<String, dynamic> json, {String? id}) async {
     try {
       if (id == null) {
-        await collectionRef.doc().set(json);
+        final doc = collectionRef.doc();
+        await doc.set(json);
+        return doc.id;
       } else {
         await collectionRef.doc(id).update(json);
+        return id;
       }
     } on FirebaseException catch (err) {
       debugPrint('firebase_repository:save $err');

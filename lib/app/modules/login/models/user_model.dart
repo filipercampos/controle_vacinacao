@@ -36,7 +36,7 @@ class UserModel {
         email: json['email'] as String,
         civ: json['civ'] ?? '',
         cpf: json['cpf'] ?? '',
-        profile: json['profile'] ?? ProfileEnum.A.toString(),
+        profile: json['profile'] ?? ProfileEnum.C.toString(),
         birthDate: DateUtil.toDateFromTimestamp(json['birthDate']));
 
     if (json.containsKey('address') && json['address'] is Map) {
@@ -77,6 +77,7 @@ class UserModel {
       'cpf': cpf,
       'civ': civ,
       'birthDate': birthDate,
+      'profile': profile
     };
   }
 

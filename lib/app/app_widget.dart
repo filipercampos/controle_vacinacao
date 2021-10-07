@@ -1,5 +1,6 @@
 import 'package:controle_vacinacao/app/modules/admin/admin_page.dart';
 import 'package:controle_vacinacao/app/modules/admin/pages/operator/operator_page.dart';
+import 'package:controle_vacinacao/app/modules/control/control_page.dart';
 import 'package:controle_vacinacao/app/modules/control/pages/vaccine/vaccine_page.dart';
 import 'package:controle_vacinacao/app/modules/history/history_page.dart';
 import 'package:controle_vacinacao/app/modules/profile/profile_page.dart';
@@ -13,7 +14,7 @@ import 'constants/app_colors.dart';
 import 'constants/app_pages.dart';
 import 'modules/admin/admin_controller.dart';
 import 'modules/control/control_controller.dart';
-import 'modules/control/pages/read_code/read_code_page.dart';
+import 'modules/control/pages/qrcode/qrcode_page.dart';
 import 'modules/profile/profile_controller.dart';
 import 'modules/start/start_controller.dart';
 import 'modules/start/start_page.dart';
@@ -84,13 +85,14 @@ class _AppWidgetState extends State<AppWidget> {
         AppPages.INIT: (ctx) => SplashPage(),
         AppPages.START: (ctx) => BasePage(),
         AppPages.LOGIN: (ctx) => LoginPage(),
+        AppPages.SIGNUP: (ctx) => SignupPage(),
         AppPages.HISTORY: (ctx) => HistoryPage(),
         AppPages.ADMIN: (ctx) => AdminPage(),
+        AppPages.CONTROL: (ctx) => ControlPage(),
         AppPages.PROFILE: (ctx) => ProfilePage(),
         AppPages.OPERATOR: (ctx) => OperatorPage(),
         AppPages.VACCINE: (ctx) => VaccinePage(),
-        AppPages.QRCODE: (ctx) => ReadCodePage(),
-        AppPages.SIGNUP: (ctx) => SignupPage(),
+        AppPages.QRCODE: (ctx) => QrCodePage(),
       },
     );
   }

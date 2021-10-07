@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/modules/control/pages/qrcode/qrcode_controller.dart';
 import 'package:controle_vacinacao/app/modules/login/models/user_model.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:get_it/get_it.dart';
@@ -17,6 +18,9 @@ abstract class _ControlControllerBase with Store {
   void register() {
     if (!GetIt.I.isRegistered<VaccineController>()) {
       GetIt.I.registerSingleton(VaccineController());
+    }
+    if (!GetIt.I.isRegistered<QrCodeController>()) {
+      GetIt.I.registerSingleton(QrCodeController());
     }
   }
 

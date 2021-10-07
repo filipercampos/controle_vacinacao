@@ -20,11 +20,17 @@ class CustomDrawer extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: 8,
+                          ),
                           child: Text(
-                            'Sistema de Controle de Vacinação',
-                            style: TextStyle(color: Colors.black),
+                            'Controle de Vacinação',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),

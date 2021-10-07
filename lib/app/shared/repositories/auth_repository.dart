@@ -1,4 +1,5 @@
 import 'package:controle_vacinacao/app/modules/login/models/user_model.dart';
+import 'package:controle_vacinacao/app/shared/enums/auth_status.dart';
 import 'package:controle_vacinacao/app/shared/enums/profile_enum.dart';
 import 'package:controle_vacinacao/app/shared/repositories/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,9 @@ class AuthRepository {
   final userRepository = UserRepository();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   UserModel? _user;
+  AuthStatus _status = AuthStatus.IDLE;
+
+  AuthStatus get status => _status;
 
   UserModel get user => _user!;
 
@@ -30,8 +34,10 @@ class AuthRepository {
     try {
       final auth = FirebaseAppAuth(email: email, password: password);
       final firebaseUser = await auth.authenticate();
+      _status = AuthStatus.SUCCESS;
       return firebaseUser;
     } catch (err) {
+      _status = AuthStatus.FAIL;
       debugPrint('auth $err');
       throw err;
     }
@@ -53,7 +59,9 @@ class AuthRepository {
       debugPrint('Loading user');
       try {
         _user = await userRepository.getById(currentUser.uid);
+        _status = AuthStatus.SUCCESS;
       } catch (error) {
+        _status = AuthStatus.FAIL;
         //logout
         // signOut();
         throw error;

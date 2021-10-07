@@ -1,6 +1,7 @@
-import 'package:controle_vacinacao/app/modules/login/login_controller.dart';
 import 'package:controle_vacinacao/app/modules/start/start_controller.dart';
 import 'package:controle_vacinacao/app/shared/enums/auth_status.dart';
+import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
+import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -12,22 +13,16 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
-  final controller = GetIt.I.get<LoginController>();
+  final auth = GetIt.I.get<AuthRepository>();
   late ReactionDisposer disposer;
 
   @override
   void initState() {
     super.initState();
-    //init obscure
-    controller.passwordVisible = false;
-    //login global
-    disposer = reaction((_) => controller.status, (status) {
-      if (status == AuthStatus.SUCCESS) {
-        _startApp();
-      }
-    });
+
     _startApp();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -70,12 +65,14 @@ class _SplashPageState extends State<SplashPage>
   }
 
   Future<void> _startApp() async {
-    Future.delayed(Duration(seconds: 1)).then(
-      (_) {
+    Future.delayed(Duration(seconds: 1)).then((_) {
+      if (auth.status == AuthStatus.SUCCESS) {
         //define and start module
         final route = GetIt.I.get<StartController>().initialModule;
         Navigator.of(context).pushReplacementNamed(route);
-      },
-    );
+      } else {
+        navigator.pushLogin(context);
+      }
+    });
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 //Leitor de QR Code
-class ReadCodePage extends StatefulWidget {
-  const ReadCodePage({Key? key}) : super(key: key);
+class QrCodePage extends StatefulWidget {
+  const QrCodePage({Key? key}) : super(key: key);
   @override
-  ReadCodePageState createState() => ReadCodePageState();
+  QrCodePageState createState() => QrCodePageState();
 }
 
-class ReadCodePageState extends State<ReadCodePage> {
+class QrCodePageState extends State<QrCodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

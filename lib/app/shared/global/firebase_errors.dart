@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 String getFirebaseErrorCode(String errorCode) {
   // fonte: https://firebase.google.com/docs/reference/js/firebase.auth.Auth
   // fonte: https://firebase.google.com/docs/auth/admin/errors?hl=pt-br
@@ -177,4 +179,14 @@ String getFirebaseErrorCode(String errorCode) {
     default:
       return "Falha durante a autenticação";
   }
+}
+
+String getHandleFirebaseErrorMessage(err) {
+  String errorMessage;
+  if (err is FirebaseAuthException) {
+    errorMessage = getFirebaseErrorCode(err.code);
+  } else {
+    errorMessage = err is String ? err : '$err';
+  }
+  return errorMessage;
 }

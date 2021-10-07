@@ -40,9 +40,22 @@ class VaccinePageState extends State<VaccinePage> {
             padding: const EdgeInsets.all(12.0),
             children: <Widget>[
               InputFormFieldBorder(
-                hintText: 'Nome da vacina',
+                autofocus: true,
+                autocorrect: true,
+                hintText: 'Nome da Doença',
+                onChanged: controller.setDisease,
+                validator: controller.validateDisease,
+                maxLength: 45,
+                textCapitalization: TextCapitalization.characters,
+              ),
+              SizedBox(height: 8),
+              InputFormFieldBorder(
+                autocorrect: true,
+                hintText: 'Nome da Vacina',
                 onChanged: controller.setName,
                 validator: controller.validateName,
+                maxLength: 45,
+                textCapitalization: TextCapitalization.characters,
               ),
               SizedBox(height: 8),
             ],
@@ -59,7 +72,7 @@ class VaccinePageState extends State<VaccinePage> {
                 (_) {
                   navigator.pushSuccess(
                     context,
-                    routeBack: AppPages.ADMIN,
+                    routeBack: AppPages.CONTROL,
                     message: 'Vacina salva com sucesso',
                   );
                 },
