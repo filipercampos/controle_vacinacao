@@ -29,10 +29,10 @@ class ControlPageState extends State<ControlPage> {
         children: <Widget>[],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.add),
-        label: Text('Vacina'),
+        icon: Icon(Icons.qr_code_scanner),
+        label: Text('Identificar'),
         onPressed: () {
-          navigator.pushVaccine(context);
+          navigator.pushQrCode(context);
         },
       ),
     );

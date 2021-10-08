@@ -1,5 +1,5 @@
 import 'package:controle_vacinacao/app/modules/admin/admin_page.dart';
-import 'package:controle_vacinacao/app/modules/admin/pages/operator/operator_page.dart';
+import 'package:controle_vacinacao/app/modules/admin/pages/operator/add_operator_page.dart';
 import 'package:controle_vacinacao/app/modules/control/control_page.dart';
 import 'package:controle_vacinacao/app/modules/control/pages/vaccine/vaccine_page.dart';
 import 'package:controle_vacinacao/app/modules/history/history_page.dart';

@@ -1,10 +1,8 @@
 import 'package:controle_vacinacao/app/pages/success_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 import 'constants/app_pages.dart';
-import 'modules/start/start_controller.dart';
 
 class AppController {
   ///Replace page
@@ -14,9 +12,7 @@ class AppController {
 
   ///Replace page and go to home
   void pushStart(context) {
-    //define and start module
-    final route = GetIt.I.get<StartController>().initialModule;
-    Navigator.of(context).pushReplacementNamed(route);
+    Navigator.of(context).pushReplacementNamed(AppPages.START);
   }
 
   void pushHome(context, {bool replace = false}) {
@@ -55,6 +51,10 @@ class AppController {
     Navigator.of(context).pushNamed(AppPages.SIGNUP);
   }
 
+  void pushQrCode(BuildContext context) {
+    Navigator.of(context).pushNamed(AppPages.QRCODE);
+  }
+
   void pushSuccess(
     context, {
     required String routeBack,
@@ -68,6 +68,13 @@ class AppController {
         ),
       ),
     );
+  }
+
+  void push(context, String route, {bool replace = false}) {
+    if (replace)
+      Navigator.of(context).pushReplacementNamed(route);
+    else
+      Navigator.of(context).pushNamed(route);
   }
 
   void popUntil(context, String route) {

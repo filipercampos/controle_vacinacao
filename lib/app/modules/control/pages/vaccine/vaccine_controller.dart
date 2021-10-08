@@ -24,9 +24,9 @@ abstract class _VaccineControllerBase with Store {
   String name = '';
   @observable
   String disease = '';
-  //TODO
+  //id recuperado pelo qrcode
   @observable
-  String uid = 'Xatil1bYC4eWbtmfavHOH9LD0RP2'; //id recuperado pelo qrcode
+  String uid = '';
   String errorMessage = '';
 
   @action
@@ -50,6 +50,7 @@ abstract class _VaccineControllerBase with Store {
       final vid = await repository.save(vaccine.toJson());
       final dose = Dose(name: '1 Dose', oid: oid, vid: vid);
       await _doseRepository.save(dose.toJson());
+      vaccine.doses.add(dose);
     } catch (err) {
       loading = false;
       errorMessage = getHandleFirebaseErrorMessage(err);

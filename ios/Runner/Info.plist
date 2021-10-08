@@ -43,5 +43,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Esse aplicativo deseja acessar sua câmera para a leitura do código de barras.</string>	
 </dict>
 </plist>

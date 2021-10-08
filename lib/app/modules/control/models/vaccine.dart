@@ -19,7 +19,7 @@ class Vaccine {
   String oid;
   List<Dose> doses = [];
   DateTime? createAt;
-  
+
   factory Vaccine.fromDocument(DocumentSnapshot document) {
     final json = document.data() as Map<String, dynamic>;
     final model = Vaccine(
@@ -30,6 +30,7 @@ class Vaccine {
       oid: json['oid'] as String,
       createAt: DateUtil.toDateFromTimestamp(json['createAt']),
     );
+    model.doses = (json['doses'] as List).map((e) => Dose.fromJson(e)).toList();
     return model;
   }
 
@@ -39,6 +40,7 @@ class Vaccine {
       'disease': disease,
       'uid': uid,
       'oid': oid,
+      'doses': doses.map((e) => e.toJson()).toList(),
       'createAt': FieldValue.serverTimestamp(),
     };
   }

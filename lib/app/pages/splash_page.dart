@@ -1,10 +1,8 @@
 import 'package:controle_vacinacao/app/modules/start/start_controller.dart';
-import 'package:controle_vacinacao/app/shared/enums/auth_status.dart';
 import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mobx/mobx.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -14,8 +12,6 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   final auth = GetIt.I.get<AuthRepository>();
-  late ReactionDisposer disposer;
-
   @override
   void initState() {
     super.initState();
@@ -65,14 +61,14 @@ class _SplashPageState extends State<SplashPage>
   }
 
   Future<void> _startApp() async {
-    Future.delayed(Duration(seconds: 1)).then((_) {
-      if (auth.status == AuthStatus.SUCCESS) {
-        //define and start module
+    //define and start module
+    Future.delayed(Duration(milliseconds: 1800)).then((_) {
+      auth.loadCurrentUser().then((value) {
         final route = GetIt.I.get<StartController>().initialModule;
         Navigator.of(context).pushReplacementNamed(route);
-      } else {
+      }).catchError((err) {
         navigator.pushLogin(context);
-      }
+      });
     });
   }
 }

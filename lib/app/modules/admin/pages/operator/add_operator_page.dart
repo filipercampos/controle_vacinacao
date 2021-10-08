@@ -10,13 +10,13 @@ import 'package:get_it/get_it.dart';
 
 import 'operator_controller.dart';
 
-class AddOperatorPage extends StatefulWidget {
-  const AddOperatorPage({Key? key}) : super(key: key);
+class OperatorPage extends StatefulWidget {
+  const OperatorPage({Key? key}) : super(key: key);
   @override
-  AddOperatorPageState createState() => AddOperatorPageState();
+  OperatorPageState createState() => OperatorPageState();
 }
 
-class AddOperatorPageState extends State<AddOperatorPage> {
+class OperatorPageState extends State<OperatorPage> {
   final controller = GetIt.I.get<OperatorController>();
 
   @override

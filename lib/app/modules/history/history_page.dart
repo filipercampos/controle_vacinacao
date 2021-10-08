@@ -1,3 +1,4 @@
+import 'package:controle_vacinacao/app/constants/app_colors.dart';
 import 'package:controle_vacinacao/app/modules/history/history_controller.dart';
 import 'package:controle_vacinacao/app/modules/history/history_tile.dart';
 import 'package:controle_vacinacao/app/shared/utils/animation_util.dart';
@@ -27,6 +28,30 @@ class HistoryPageState extends State<HistoryPage> {
       body: Observer(builder: (snapshot) {
         if (controller.loading) {
           return Center(child: AnimationUtil.circularProgressIndicator());
+        }
+        if (controller.vaccines.length == 0) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.sentiment_very_dissatisfied,
+                  size: 48,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Sem Registros',
+                    style: TextStyle(
+                      color: subtitleColor,
+                      fontSize: 17,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
         }
         return ListView.builder(
           itemCount: controller.vaccines.length,

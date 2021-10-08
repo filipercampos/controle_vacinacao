@@ -52,6 +52,7 @@ class AuthRepository {
   ///Carrega o [User] Seta o usuário autenticado com suas permissões
   ///Verifica se existe um usuário autenticado
   Future loadCurrentUser({User? firebaseUser}) async {
+    if (_user != null) return;
     //verifica se o usuário informado
     final currentUser = firebaseUser ?? getCurrentUser();
 
