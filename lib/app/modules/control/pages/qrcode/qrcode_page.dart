@@ -25,6 +25,7 @@ class _QrCodePageState extends State<QrCodePage> {
     controller.barCodeResult = null;
     controller.frontCamera = false;
     controller.flashLight = false;
+    controller.errorMessage = '';
   }
 
   // In order to get hot reload to work we need to pause the camera if the platform
@@ -110,17 +111,22 @@ class _QrCodePageState extends State<QrCodePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Observer(builder: (_) {
-                  if (controller.qrcode.isEmpty)
+                  if (controller.errorMessage.isNotEmpty)
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Escanear código identificação',
+                        controller.errorMessage,
                         style: TextStyle(color: Colors.white),
                       ),
                     );
-                  return Text(
-                    controller.barcodeFormat,
-                    style: TextStyle(color: Colors.white),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      controller.qrcode.isEmpty
+                          ? 'Escanear código identificação'
+                          : controller.qrcode,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   );
                 }),
                 Row(
@@ -131,6 +137,7 @@ class _QrCodePageState extends State<QrCodePage> {
                       child: TextButton(
                         onPressed: () async {
                           await controller.qrViewcontroller?.pauseCamera();
+                          Navigator.of(context).pop();
                         },
                         child: Text(
                           'Pausar',
@@ -194,11 +201,12 @@ class _QrCodePageState extends State<QrCodePage> {
     _subscription = qrViewController.scannedDataStream.listen((scanData) {
       setState(() {
         controller.barCodeResult = scanData;
-      });
-      _subscription.cancel();
-      Future.delayed(Duration(seconds: 1), () {
-        //TODO go to user data
-        navigator.pushVaccine(context);
+        controller.identifyUser().then((value) {
+          _subscription.cancel();
+          Future.delayed(Duration(seconds: 1), () {
+            navigator.pushFoundUserAnimation(context);
+          });
+        });
       });
     });
   }

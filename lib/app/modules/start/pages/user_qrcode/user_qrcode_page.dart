@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class UserQrCodePage extends StatefulWidget {
+  const UserQrCodePage({Key? key}) : super(key: key);
   @override
-  ProfilePageState createState() => ProfilePageState();
+  UserQrCodePageState createState() => UserQrCodePageState();
 }
 
-class ProfilePageState extends State<ProfilePage> {
+class UserQrCodePageState extends State<UserQrCodePage> {
   final auth = GetIt.I.get<AuthRepository>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Código Identificação',
+          'Meu QR Code',
           style: TextStyle(
             color: Colors.black,
           ),

@@ -1,5 +1,5 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
-import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
+import 'package:controle_vacinacao/app/modules/start/start_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,7 +24,9 @@ class LoginButton extends StatelessWidget {
                   if (controller.validate()) {
                     controller.login().then(
                       (_) {
-                        navigator.pushStart(context);
+                        final route =
+                            GetIt.I.get<StartController>().initialModule;
+                        Navigator.of(context).pushReplacementNamed(route);
                       },
                     ).catchError((error) {
                       scafMesseger.removeCurrentSnackBar();

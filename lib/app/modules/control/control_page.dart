@@ -19,16 +19,34 @@ class ControlPageState extends State<ControlPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Controle Vacinação'),
       ),
       drawer: CustomDrawer(),
-      body: Column(
-        children: <Widget>[],
+       body: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(12),
+            child: Text(
+              'Bem-vindo: ${controller.user.displayName}',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'ControlHeroTag',
         icon: Icon(Icons.qr_code_scanner),
         label: Text('Identificar'),
         onPressed: () {

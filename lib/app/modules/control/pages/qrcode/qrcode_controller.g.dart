@@ -99,6 +99,36 @@ mixin _$QrCodeController on _QrCodeControllerBase, Store {
     });
   }
 
+  final _$userAtom = Atom(name: '_QrCodeControllerBase.user');
+
+  @override
+  UserModel? get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(UserModel? value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
+  final _$errorMessageAtom = Atom(name: '_QrCodeControllerBase.errorMessage');
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   final _$toogleFlashAsyncAction =
       AsyncAction('_QrCodeControllerBase.toogleFlash');
 
@@ -123,6 +153,8 @@ resume: ${resume},
 flashLight: ${flashLight},
 frontCamera: ${frontCamera},
 barCodeResult: ${barCodeResult},
+user: ${user},
+errorMessage: ${errorMessage},
 qrcode: ${qrcode},
 barcodeFormat: ${barcodeFormat}
     ''';

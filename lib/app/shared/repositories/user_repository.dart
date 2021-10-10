@@ -29,6 +29,21 @@ class UserRepository {
     }
   }
 
+  ///Get [User] from id
+  Future<UserModel?> getByCiv(String civ) async {
+    try {
+      final result = await _collectionRef.where('civ', isEqualTo: civ).get();
+
+      if (result.docs.isNotEmpty) {
+        final user = UserModel.fromDocument(result.docs[0]);
+        return user;
+      }
+      return null;
+    } catch (error) {
+      debugPrint('Error user_firebase_repository.getUsuario: $error');
+      throw error;
+    }
+  }
   ///Get [User] from cpf
   Future<UserModel?> getUserByCpf(String cpf) async {
     try {

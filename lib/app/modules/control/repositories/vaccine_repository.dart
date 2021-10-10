@@ -11,6 +11,23 @@ class VaccineRepository extends FirebaseRepository<Vaccine> {
     return Vaccine.fromDocument(document);
   }
 
+  Future<List<Vaccine>> findVaccines(String uid, {String name = ''}) async {
+    try {
+      final docs = await this
+          .collectionRef
+          .where(
+            'uid',
+            isEqualTo: uid,
+          )
+          .where('name', isEqualTo: name)
+          .get();
+      return this.toList(docs.docs);
+    } catch (err) {
+      debugPrint('vaccine_repository.getAllByUser $err');
+      return [];
+    }
+  }
+
   Future<List<Vaccine>> getAllByUser(String uid) async {
     try {
       final docs = await this.collectionRef.where('uid', isEqualTo: uid).get();

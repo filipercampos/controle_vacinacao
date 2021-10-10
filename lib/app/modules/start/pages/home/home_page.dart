@@ -1,8 +1,7 @@
-import 'package:controle_vacinacao/app/shared/components/custom_drawer.dart';
+import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
+import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,14 +10,13 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final controller = GetIt.I.get<HomeController>();
+  final controller = GetIt.I.get<AuthRepository>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
       ),
-      drawer: CustomDrawer(),
       body: Column(
         children: <Widget>[
           Container(
@@ -32,6 +30,14 @@ class HomePageState extends State<HomePage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'HomePageHeroTag',
+        icon: Icon(Icons.qr_code_scanner),
+        label: Text('Meu QR Code'),
+        onPressed: () {
+          navigator.pushUserQrCode(context);
+        },
       ),
     );
   }

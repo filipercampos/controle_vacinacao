@@ -61,6 +61,7 @@ class AuthRepository {
       try {
         _user = await userRepository.getById(currentUser.uid);
         _status = AuthStatus.SUCCESS;
+        debugPrint('${_user?.profile}');
       } catch (error) {
         _status = AuthStatus.FAIL;
         //logout

@@ -1,5 +1,5 @@
 import 'package:controle_vacinacao/app/constants/app_pages.dart';
-import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
+import 'package:controle_vacinacao/app/modules/start/start_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -99,7 +99,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 onTap: () {
                   //signout
-                  GetIt.I<AuthRepository>().signOut();
+                  GetIt.I.get<StartController>().dispose();
                   Navigator.of(context).pushReplacementNamed(AppPages.LOGIN);
                 },
               ),

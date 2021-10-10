@@ -1,3 +1,5 @@
+import 'package:controle_vacinacao/app/modules/control/pages/found_user/found_user_page.dart';
+import 'package:controle_vacinacao/app/modules/start/pages/user_qrcode/user_qrcode_page.dart';
 import 'package:controle_vacinacao/app/pages/success_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ class AppController {
   }
 
   void pushVaccine(context) {
-    Navigator.of(context).pushNamed(AppPages.VACCINE);
+    Navigator.of(context).pushReplacementNamed(AppPages.VACCINE);
   }
 
   void pushHistory(context) {
@@ -43,8 +45,47 @@ class AppController {
   }
 
   Future<void> pushProfile(context) async {
-    await Navigator.of(context, rootNavigator: true)
-        .pushNamed(AppPages.PROFILE);
+    await Navigator.of(context).pushNamed(AppPages.PROFILE);
+  }
+
+  Future<void> pushUserQrCode(context) async {
+    await Navigator.of(context, rootNavigator: true).push(PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const UserQrCodePage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    ));
+  }
+
+  Future<void> pushFoundUserAnimation(context) async {
+    await Navigator.of(context, rootNavigator: true).pushReplacement(PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const FoundUserPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    ));
   }
 
   void pushSignup(context) {

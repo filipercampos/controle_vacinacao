@@ -1,11 +1,4 @@
-import 'package:controle_vacinacao/app/modules/admin/admin_page.dart';
-import 'package:controle_vacinacao/app/modules/admin/pages/operator/add_operator_page.dart';
-import 'package:controle_vacinacao/app/modules/control/control_page.dart';
-import 'package:controle_vacinacao/app/modules/control/pages/vaccine/vaccine_page.dart';
-import 'package:controle_vacinacao/app/modules/history/history_page.dart';
-import 'package:controle_vacinacao/app/modules/profile/profile_page.dart';
-import 'package:controle_vacinacao/app/modules/signup/signup_page.dart';
-import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
+import 'package:controle_vacinacao/app/modules/start/pages/user_qrcode/user_qrcode_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -13,15 +6,24 @@ import 'app_controller.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_pages.dart';
 import 'modules/admin/admin_controller.dart';
+import 'modules/admin/admin_page.dart';
+import 'modules/admin/pages/operator/add_operator_page.dart';
 import 'modules/control/control_controller.dart';
+import 'modules/control/control_page.dart';
+import 'modules/control/pages/found_user/found_user_page.dart';
+import 'modules/control/pages/qrcode/qrcode_controller.dart';
 import 'modules/control/pages/qrcode/qrcode_page.dart';
-import 'modules/profile/profile_controller.dart';
-import 'modules/start/start_controller.dart';
-import 'modules/start/start_page.dart';
-import 'modules/home/home_controller.dart';
+import 'modules/control/pages/vaccine/vaccine_controller.dart';
+import 'modules/control/pages/vaccine/vaccine_page.dart';
 import 'modules/login/login_controller.dart';
 import 'modules/login/login_page.dart';
+import 'modules/signup/signup_page.dart';
+import 'modules/start/pages/history/history_page.dart';
+import 'modules/start/pages/profile/profile_page.dart';
+import 'modules/start/start_controller.dart';
+import 'modules/start/start_page.dart';
 import 'pages/splash_page.dart';
+import 'shared/repositories/auth_repository.dart';
 
 class AppWidget extends StatefulWidget {
   @override
@@ -38,10 +40,10 @@ class _AppWidgetState extends State<AppWidget> {
     getIt.registerSingleton(AppController());
     getIt.registerSingleton(StartController());
     getIt.registerSingleton(LoginController());
-    getIt.registerSingleton(HomeController());
     getIt.registerSingleton(AdminController());
-    getIt.registerSingleton(ProfileController());
     getIt.registerSingleton(ControlController());
+    GetIt.I.registerSingleton(VaccineController());
+    GetIt.I.registerSingleton(QrCodeController());
   }
 
   @override
@@ -83,7 +85,7 @@ class _AppWidgetState extends State<AppWidget> {
       ),
       routes: {
         AppPages.INIT: (ctx) => SplashPage(),
-        AppPages.START: (ctx) => BasePage(),
+        AppPages.START: (ctx) => StartPage(),
         AppPages.LOGIN: (ctx) => LoginPage(),
         AppPages.SIGNUP: (ctx) => SignupPage(),
         AppPages.HISTORY: (ctx) => HistoryPage(),
@@ -93,6 +95,8 @@ class _AppWidgetState extends State<AppWidget> {
         AppPages.OPERATOR: (ctx) => OperatorPage(),
         AppPages.VACCINE: (ctx) => VaccinePage(),
         AppPages.QRCODE: (ctx) => QrCodePage(),
+        AppPages.USER_QRCODE: (ctx) => UserQrCodePage(),
+        AppPages.FOUND_USER: (ctx) => FoundUserPage(),
       },
     );
   }

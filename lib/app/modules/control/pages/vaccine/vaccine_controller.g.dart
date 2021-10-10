@@ -54,19 +54,28 @@ mixin _$VaccineController on _VaccineControllerBase, Store {
     });
   }
 
-  final _$uidAtom = Atom(name: '_VaccineControllerBase.uid');
+  final _$saveVaccineAsyncAction =
+      AsyncAction('_VaccineControllerBase.saveVaccine');
 
   @override
-  String get uid {
-    _$uidAtom.reportRead();
-    return super.uid;
+  Future<void> saveVaccine() {
+    return _$saveVaccineAsyncAction.run(() => super.saveVaccine());
   }
 
+  final _$_saveVaccineAsyncAction =
+      AsyncAction('_VaccineControllerBase._saveVaccine');
+
   @override
-  set uid(String value) {
-    _$uidAtom.reportWrite(value, super.uid, () {
-      super.uid = value;
-    });
+  Future<void> _saveVaccine() {
+    return _$_saveVaccineAsyncAction.run(() => super._saveVaccine());
+  }
+
+  final _$_saveDoseAsyncAction =
+      AsyncAction('_VaccineControllerBase._saveDose');
+
+  @override
+  Future<void> _saveDose() {
+    return _$_saveDoseAsyncAction.run(() => super._saveDose());
   }
 
   final _$_VaccineControllerBaseActionController =
@@ -95,6 +104,17 @@ mixin _$VaccineController on _VaccineControllerBase, Store {
   }
 
   @override
+  void setVaccine(Vaccine vaccine) {
+    final _$actionInfo = _$_VaccineControllerBaseActionController.startAction(
+        name: '_VaccineControllerBase.setVaccine');
+    try {
+      return super.setVaccine(vaccine);
+    } finally {
+      _$_VaccineControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic dispose() {
     final _$actionInfo = _$_VaccineControllerBaseActionController.startAction(
         name: '_VaccineControllerBase.dispose');
@@ -110,8 +130,7 @@ mixin _$VaccineController on _VaccineControllerBase, Store {
     return '''
 loading: ${loading},
 name: ${name},
-disease: ${disease},
-uid: ${uid}
+disease: ${disease}
     ''';
   }
 }

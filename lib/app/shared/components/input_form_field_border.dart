@@ -36,6 +36,8 @@ class InputFormFieldBorder extends InputFormField {
     Widget? suffixIcon,
     Widget? prefixIcon,
     bool obscure = false,
+    bool hideCounterText = false,
+    bool readOnly = false,
     Key? key,
   }) : super(
           controller: controller,
@@ -62,6 +64,7 @@ class InputFormFieldBorder extends InputFormField {
           letterSpacing: letterSpacing,
           maxLines: maxLines,
           obscure: obscure,
+          readOnly: readOnly,
           inputDecoration: InputDecoration(
             icon: icon,
             suffixIcon: suffixIcon,
@@ -96,7 +99,7 @@ class InputFormFieldBorder extends InputFormField {
                 color: primaryColor,
               ),
             ),
-            counterText: null, //hide count text
+            counterText: hideCounterText ? '' : null, //hide count text
           ),
         );
 }

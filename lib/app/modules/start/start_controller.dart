@@ -1,8 +1,12 @@
 import 'package:controle_vacinacao/app/constants/app_pages.dart';
+import 'package:controle_vacinacao/app/modules/start/pages/history/history_controller.dart';
+import 'package:controle_vacinacao/app/modules/start/pages/home/home_controller.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+
+import 'pages/profile/profile_controller.dart';
 
 part 'start_controller.g.dart';
 
@@ -20,6 +24,25 @@ abstract class _StartControllerBase with Store {
 
   @computed
   int get page => _page;
+
+  register() {
+    if (!GetIt.I.isRegistered<HomeController>()) {
+      GetIt.I.registerSingleton(HomeController());
+    }
+    if (!GetIt.I.isRegistered<HistoryController>()) {
+      GetIt.I.registerSingleton(HistoryController());
+    }
+    if (!GetIt.I.isRegistered<ProfileController>()) {
+      GetIt.I.registerSingleton(ProfileController());
+    }
+  }
+
+  dispose() {
+    GetIt.I.unregister<HomeController>();
+    GetIt.I.unregister<HistoryController>();
+    GetIt.I.unregister<ProfileController>();
+    GetIt.I<AuthRepository>().signOut();
+  }
 
   @action
   void goHome() {

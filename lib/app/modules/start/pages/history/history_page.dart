@@ -1,9 +1,11 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
-import 'package:controle_vacinacao/app/modules/history/history_controller.dart';
-import 'package:controle_vacinacao/app/modules/history/history_tile.dart';
 import 'package:controle_vacinacao/app/shared/utils/animation_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+
+import 'history_controller.dart';
+import 'history_tile.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class HistoryPage extends StatefulWidget {
 }
 
 class HistoryPageState extends State<HistoryPage> {
-  final controller = HistoryController();
+  final controller = GetIt.I.get<HistoryController>();
   @override
   void initState() {
     super.initState();

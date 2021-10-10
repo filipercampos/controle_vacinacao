@@ -1,38 +1,35 @@
 import 'package:controle_vacinacao/app/constants/app_colors.dart';
-import 'package:controle_vacinacao/app/modules/history/history_page.dart';
-import 'package:controle_vacinacao/app/modules/home/home_page.dart';
-import 'package:controle_vacinacao/app/modules/profile/profile_page.dart';
-import 'package:controle_vacinacao/app/shared/global/app_navigator.dart';
+import 'package:controle_vacinacao/app/modules/start/pages/history/history_page.dart';
+import 'package:controle_vacinacao/app/modules/start/pages/home/home_page.dart';
+import 'package:controle_vacinacao/app/modules/start/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import 'start_controller.dart';
 
-class BasePage extends StatefulWidget {
+class StartPage extends StatefulWidget {
   @override
-  _BasePageState createState() => _BasePageState();
+  _StartPageState createState() => _StartPageState();
 }
 
-class _BasePageState extends State<BasePage> {
+class _StartPageState extends State<StartPage> {
   final controller = GetIt.I.get<StartController>();
   late ReactionDisposer disposer;
 
   @override
   void initState() {
     super.initState();
+    controller.register();
     disposer = reaction((_) => controller.page, (int page) {
-      if (page == 2) {
-        navigator.pushProfile(context).then((value) {
-          controller.setPage(0);
-          setState(() {
-            
-          });
-        });
-      } else {
-        controller.pageController.jumpToPage(page);
-      }
+      controller.pageController.jumpToPage(page);
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 
   @override

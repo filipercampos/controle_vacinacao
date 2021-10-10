@@ -1,6 +1,6 @@
 import 'package:controle_vacinacao/app/modules/control/models/dose.dart';
 import 'package:controle_vacinacao/app/modules/control/models/vaccine.dart';
-import 'package:controle_vacinacao/app/modules/control/repositories/dose_repository.dart';
+import 'package:controle_vacinacao/app/modules/control/pages/qrcode/qrcode_controller.dart';
 import 'package:controle_vacinacao/app/modules/control/repositories/vaccine_repository.dart';
 import 'package:controle_vacinacao/app/shared/global/firebase_errors.dart';
 import 'package:controle_vacinacao/app/shared/repositories/auth_repository.dart';
@@ -14,7 +14,6 @@ class VaccineController = _VaccineControllerBase with _$VaccineController;
 
 abstract class _VaccineControllerBase with Store {
   final repository = VaccineRepository();
-  final _doseRepository = DoseRepository();
   final _auth = GetIt.I.get<AuthRepository>();
   final formKey = GlobalKey<FormState>();
 
@@ -24,33 +23,32 @@ abstract class _VaccineControllerBase with Store {
   String name = '';
   @observable
   String disease = '';
-  //id recuperado pelo qrcode
-  @observable
-  String uid = '';
+
   String errorMessage = '';
+  Vaccine? selectedVaccine;
+
+  String get dose {
+    if (selectedVaccine == null) {
+      return '1ª Dose';
+    }
+    return '${selectedVaccine!.doses.length + 1}ª Dose';
+  }
 
   @action
   void setName(String value) => name = value;
   @action
   void setDisease(String value) => disease = value;
 
+  @action
   Future<void> saveVaccine() async {
     try {
       //user auth is operator
-      final oid = _auth.user.id;
       loading = true;
-
-      final vaccine = Vaccine(
-        name: name,
-        uid: uid,
-        oid: oid,
-        disease: disease,
-      );
-
-      final vid = await repository.save(vaccine.toJson());
-      final dose = Dose(name: '1 Dose', oid: oid, vid: vid);
-      await _doseRepository.save(dose.toJson());
-      vaccine.doses.add(dose);
+      if (selectedVaccine == null) {
+        await _saveVaccine();
+      } else {
+        await _saveDose();
+      }
     } catch (err) {
       loading = false;
       errorMessage = getHandleFirebaseErrorMessage(err);
@@ -58,6 +56,42 @@ abstract class _VaccineControllerBase with Store {
     } finally {
       loading = false;
     }
+  }
+
+  @action
+  Future<void> _saveVaccine() async {
+    String uid = GetIt.I.get<QrCodeController>().user!.id;
+    final oid = _auth.user.id;
+    final vaccine = Vaccine(
+      name: name,
+      uid: uid,
+      oid: oid,
+      disease: disease,
+    );
+    //first dose
+    vaccine.doses.add(Dose(name: dose, oid: oid));
+    //save vaccine
+    await repository.save(vaccine.toJson());
+  }
+
+  @action
+  Future<void> _saveDose() async {
+    //user auth is operator
+    final oid = _auth.user.id;
+    final doses = selectedVaccine!.doses;
+    //add new dose
+    doses.add(Dose(name: dose, oid: oid));
+    //map
+    final jsonDoses = doses.map((e) => e.toJson()).toList();
+    //save doses
+    await repository.update(selectedVaccine!.id, {'doses': jsonDoses});
+  }
+
+  @action
+  void setVaccine(Vaccine vaccine) {
+    selectedVaccine = vaccine;
+    name = vaccine.name;
+    disease = vaccine.disease;
   }
 
   String? validateName(String? name) {
@@ -83,5 +117,6 @@ abstract class _VaccineControllerBase with Store {
     name = '';
     disease = '';
     errorMessage = '';
+    selectedVaccine = null;
   }
 }
