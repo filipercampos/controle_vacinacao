@@ -28,7 +28,9 @@ class VaccinePageState extends State<VaccinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar Operador'),
+        title: Text(controller.selectedVaccine == null
+            ? 'Cadastrar Vacina'
+            : 'Cadastrar Dose'),
       ),
       body: Form(
         key: controller.formKey,

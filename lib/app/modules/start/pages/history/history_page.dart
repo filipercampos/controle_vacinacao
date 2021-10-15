@@ -21,47 +21,55 @@ class HistoryPageState extends State<HistoryPage> {
     controller.fetchHistory();
   }
 
+  Future<void> _refresh() async {
+    controller.vaccines.clear();
+    await controller.fetchHistory();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Histórico Vacinação'),
       ),
-      body: Observer(builder: (snapshot) {
-        if (controller.loading) {
-          return Center(child: AnimationUtil.circularProgressIndicator());
-        }
-        if (controller.vaccines.length == 0) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.sentiment_very_dissatisfied,
-                  size: 48,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Sem Registros',
-                    style: TextStyle(
-                      color: subtitleColor,
-                      fontSize: 17,
-                    ),
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: Observer(builder: (snapshot) {
+          if (controller.loading) {
+            return Center(child: AnimationUtil.circularProgressIndicator());
+          }
+          if (controller.vaccines.length == 0) {
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.sentiment_very_dissatisfied,
+                    size: 48,
                   ),
-                )
-              ],
-            ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Sem Registros',
+                      style: TextStyle(
+                        color: subtitleColor,
+                        fontSize: 17,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: controller.vaccines.length,
+            itemBuilder: (_, index) {
+              return HistoriyTile(controller.vaccines[index]);
+            },
           );
-        }
-        return ListView.builder(
-          itemCount: controller.vaccines.length,
-          itemBuilder: (_, index) {
-            return HistoriyTile(controller.vaccines[index]);
-          },
-        );
-      }),
+        }),
+      ),
     );
   }
 }

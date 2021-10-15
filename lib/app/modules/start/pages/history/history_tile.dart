@@ -71,7 +71,7 @@ class HistoriyTile extends StatelessWidget {
                                 ),
                                 SizedBox(height: 2),
                                 Container(
-                                  child: Text('${DateTime.now().toFormat()}'),
+                                  child: Text('${dose.createAt.toFormat()}'),
                                 ),
                                 Container(
                                   child: Text(
